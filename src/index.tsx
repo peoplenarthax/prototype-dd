@@ -5,6 +5,7 @@ import { PrototypeRouter } from "./module/router";
 import { AuthenticationProvider } from "./module/authentication/providers/authentication";
 
 import "bulma/css/bulma.min.css";
+import "./app.css";
 
 const App = () => {
   return (

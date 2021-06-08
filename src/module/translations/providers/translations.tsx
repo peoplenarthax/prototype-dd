@@ -9,6 +9,9 @@ interface ITranslationsContext {
   loadSheet: Function;
   sheetKeys: { [k: string]: string[] };
   loading: boolean;
+  currentLang: string;
+  changeLang: Function;
+  submitChanges: Function;
 }
 
 export const TranslationsContext = createContext<ITranslationsContext>({
@@ -17,6 +20,9 @@ export const TranslationsContext = createContext<ITranslationsContext>({
   loadSheet: () => {},
   sheetKeys: {},
   loading: true,
+  currentLang: "",
+  changeLang: () => {},
+  submitChanges: () => {},
 });
 
 const provider = new firebase.auth.GoogleAuthProvider();
@@ -25,6 +31,7 @@ provider.addScope("https://www.googleapis.com/auth/spreadsheets");
 export const TranslationsProvider: React.FC = ({ children }) => {
   const [sheets, setSheets] = useState([]);
   const [currentSheet, setCurrentSheet] = useState("");
+  const [currentLang, setCurrentLang] = useState("");
   const [sheetKeys, setSheetKeys] = useState({});
 
   const { data: sheetsResponse, loading: sheetsLoading } = useQuery({
@@ -51,9 +58,7 @@ export const TranslationsProvider: React.FC = ({ children }) => {
   useEffect(() => {
     setSheets(sheetsResponse);
     setSheetKeys(sheetKeysResponse);
-  }, [sheetsResponse, sheetsResponse]);
-
-  console.log(sheetKeysResponse);
+  }, [sheetsResponse, sheetKeysResponse]);
 
   return (
     <TranslationsContext.Provider
@@ -65,6 +70,10 @@ export const TranslationsProvider: React.FC = ({ children }) => {
           setCurrentSheet(sheetName);
         },
         loading: keysLoading || sheetsLoading,
+        currentLang,
+        changeLang: (lang: string) => {
+          setCurrentLang(lang);
+        },
       }}
     >
       {children}

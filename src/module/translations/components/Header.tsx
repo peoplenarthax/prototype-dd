@@ -1,13 +1,25 @@
 import * as React from "react";
-import { ChangeEventHandler, useContext } from "react";
+import { ChangeEventHandler, useContext, useState } from "react";
 import { TranslationsContext } from "../providers/translations";
 
 export const Header = () => {
-  const { sheets, currentSheet, loading, loadSheet } =
-    useContext(TranslationsContext);
+  const {
+    sheets,
+    currentSheet,
+    loading,
+    loadSheet,
+    sheetKeys,
+    changeLang,
+    currentLang,
+  } = useContext(TranslationsContext);
 
+  const [_, ...languages] = Object.keys(sheetKeys ?? {});
   const onSelectSheet: ChangeEventHandler<HTMLSelectElement> = (evt) => {
     loadSheet(evt.currentTarget.value);
+  };
+
+  const onLangSelected: ChangeEventHandler<HTMLSelectElement> = (evt) => {
+    changeLang(evt.currentTarget.value);
   };
   return (
     <nav
@@ -22,7 +34,7 @@ export const Header = () => {
           style={{ height: "30px" }}
         />
       </div>
-      <div className="select is-primary my-4">
+      <div className="select is-primary my-4 mx-4">
         <select value={currentSheet} onChange={onSelectSheet}>
           <option value="" disabled>
             Choose a template...
@@ -35,6 +47,22 @@ export const Header = () => {
             ))}
         </select>
       </div>
+
+      {sheetKeys && (
+        <div className="select is-primary my-4 mx-4">
+          <select value={currentLang} onChange={onLangSelected}>
+            <option value="" disabled>
+              Choose a template...
+            </option>
+            {!loading &&
+              languages.map((sheet) => (
+                <option value={sheet} key={sheet}>
+                  {sheet}
+                </option>
+              ))}
+          </select>
+        </div>
+      )}
     </nav>
   );
 };
