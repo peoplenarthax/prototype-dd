@@ -1,17 +1,18 @@
 import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { AuthenticationContext } from "../../providers/authentication";
+import { AuthenticationContext } from "../authentication/providers/authentication";
 import { Login } from "../authentication/pages/Login";
 import { Cards } from "../translations/pages/Cards";
 
 const PrivateRoute: React.FC = ({ component: Component, ...rest }) => {
   const { token } = useContext(AuthenticationContext);
 
+  console.log(process.env.AUTHENTICATION_DISABLED);
   return (
     <Route
       {...rest}
       render={(props) =>
-        token ? (
+        process.env.AUTHENTICATION_DISABLED || token ? (
           <Component {...props} />
         ) : (
           <Redirect
