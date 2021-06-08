@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@types/firebase": "^3.2.1",
+    "axios": "^0.21.1",
     "dotenv": "^10.0.0",
     "firebase": "^8.6.5",
     "react": "^17.0.1",
