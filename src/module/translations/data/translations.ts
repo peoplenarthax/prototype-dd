@@ -14,3 +14,18 @@ export const TranslationsMock = () =>
       ],
     },
   });
+
+export type SheetsResponse = {
+  data: {
+    sheets: { properties: { sheetId: number; title: string } }[];
+  };
+};
+export const SheetsMock = () =>
+  createBuilder({
+    data: {
+      sheets: [
+        { properties: { sheetId: 0, title: "Example" } },
+        { properties: { sheetId: 1, title: "Not an example" } },
+      ],
+    },
+  });

@@ -8,9 +8,8 @@ interface IAuthenticationContext {
   authenticate?: () => void;
 }
 
-const userData: any = process.env.AUTHENTICATION_DISABLED
-  ? UserBuilder().build()
-  : null;
+const userData: any =
+  process.env.AUTHENTICATION_DISABLED === "true" ? UserBuilder().build() : null;
 
 export const AuthenticationContext = createContext<IAuthenticationContext>({
   user: userData,

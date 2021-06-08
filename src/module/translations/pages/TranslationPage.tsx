@@ -2,23 +2,21 @@ import * as React from "react";
 import { useContext } from "react";
 import { AuthenticationContext } from "../../authentication/providers/authentication";
 import { HTTPMethod, useQuery } from "../../../utils/use-query";
-import { toTranslationObject } from "../data/decorators";
+import { toSheetList, toTranslationObject } from "../data/decorators";
 
-export const Cards = () => {
+export const TranslationPage = () => {
   const { user } = useContext(AuthenticationContext);
-  const { exec, data } = useQuery({
+  const { data, loading } = useQuery({
     method: HTTPMethod.GET,
-    url: "https://sheets.googleapis.com/v4/spreadsheets/1KyWk59HXtJnhTKclAird6q9c-vzqA4c6iJ8CcGCfgqo/values/parcel",
+    url: "https://sheets.googleapis.com/v4/spreadsheets/1KyWk59HXtJnhTKclAird6q9c-vzqA4c6iJ8CcGCfgqo",
     onLoad: true,
-    decorator: toTranslationObject,
+    decorator: toSheetList,
   });
-
-  console.log(data);
 
   return (
     <section>
       <h1>{user.user.displayName}</h1>
-      <button onClick={exec}>Exec</button>
+      {!loading && data.map((sheet) => <li>{sheet}</li>)}
     </section>
   );
 };

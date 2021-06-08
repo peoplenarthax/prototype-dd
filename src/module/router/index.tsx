@@ -2,17 +2,19 @@ import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { AuthenticationContext } from "../authentication/providers/authentication";
 import { Login } from "../authentication/pages/Login";
-import { Cards } from "../translations/pages/Cards";
+import { TranslationPage } from "../translations/pages/TranslationPage";
 
 const PrivateRoute: React.FC = ({ component: Component, ...rest }) => {
   const { token } = useContext(AuthenticationContext);
 
-  console.log(process.env.AUTHENTICATION_DISABLED);
+  const redirectToComponent =
+    process.env.AUTHENTICATION_DISABLED === "true" || !!token;
+
   return (
     <Route
       {...rest}
       render={(props) =>
-        process.env.AUTHENTICATION_DISABLED || token ? (
+        redirectToComponent ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -28,7 +30,7 @@ export const PrototypeRouter = () => {
   return (
     <Switch>
       <Route path="/login" component={Login} />
-      <PrivateRoute exact path="/" component={Cards} />
+      <PrivateRoute exact path="/" component={TranslationPage} />
     </Switch>
   );
 };

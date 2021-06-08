@@ -1,10 +1,17 @@
-import { TranslationsMock } from "../module/translations/data/translations";
+import {
+  SheetsMock,
+  TranslationsMock,
+} from "../module/translations/data/translations";
 
 export const mocks = {
   get: [
     {
       path: "https://sheets.googleapis.com/v4/spreadsheets/1KyWk59HXtJnhTKclAird6q9c-vzqA4c6iJ8CcGCfgqo/values",
       mock: TranslationsMock().build(),
+    },
+    {
+      path: "https://sheets.googleapis.com/v4/spreadsheets/1KyWk59HXtJnhTKclAird6q9c-vzqA4c6iJ8CcGCfgqo",
+      mock: SheetsMock().build(),
     },
   ],
 };

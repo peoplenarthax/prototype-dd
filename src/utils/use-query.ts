@@ -23,7 +23,7 @@ export const useQuery = ({
 }) => {
   const { token } = useContext(AuthenticationContext);
   const [data, setData] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(onLoad);
 
   const options = {
     headers: {
@@ -35,12 +35,13 @@ export const useQuery = ({
   const exec = async () => {
     setLoading(true);
     try {
-      const response = process.env.AUTHENTICATION_DISABLED
-        ? await getMockData(method, url)
-        : await axios[method](
-            url,
-            ...(method === HTTPMethod.GET ? [options] : [body, options])
-          );
+      const response =
+        process.env.AUTHENTICATION_DISABLED === "true"
+          ? await getMockData(method, url)
+          : await axios[method](
+              url,
+              ...(method === HTTPMethod.GET ? [options] : [body, options])
+            );
 
       setData(decorator ? decorator(response) : response);
     } catch (e) {
