@@ -2,7 +2,7 @@ import * as ReactDOM from "react-dom";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { PrototypeRouter } from "./module/router";
-import { AuthenticationProvider } from "./providers/authentication";
+import { AuthenticationProvider } from "./module/authentication/providers/authentication";
 
 const Main = () => {
   return (
