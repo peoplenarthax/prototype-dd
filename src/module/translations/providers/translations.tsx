@@ -2,7 +2,6 @@ import React, { createContext, useState, useEffect } from "react";
 import firebase from "../../../config/firebase";
 import { HTTPMethod, useQuery } from "../../../utils/use-query";
 import { toSheetList, toTranslationObject } from "../data/decorators";
-import { UserBuilder } from "../data/user";
 
 interface ITranslationsContext {
   sheets: string[];
@@ -34,6 +33,7 @@ export const TranslationsProvider: React.FC = ({ children }) => {
     onLoad: true,
     decorator: toSheetList,
   });
+
   const {
     exec: querySheetValues,
     data: sheetKeysResponse,

@@ -1,14 +1,16 @@
 import * as ReactDOM from "react-dom";
-import React from "react";
+import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { PrototypeRouter } from "./module/router";
 import { AuthenticationProvider } from "./module/authentication/providers/authentication";
 
-const Main = () => {
+import "bulma/css/bulma.min.css";
+
+const App = () => {
   return (
     <AuthenticationProvider>
       <BrowserRouter>
-        <main>
+        <main className="container is-fullheight">
           <PrototypeRouter />
         </main>
       </BrowserRouter>
@@ -16,4 +18,4 @@ const Main = () => {
   );
 };
 
-ReactDOM.render(<Main />, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById("app"));
