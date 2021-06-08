@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { AuthenticationContext } from "../authentication/providers/authentication";
 import { Login } from "../authentication/pages/Login";
-import { TranslationPage } from "../translations/pages/TranslationPage";
+import { Main } from "../translations/pages/Main";
 
 const PrivateRoute: React.FC = ({ component: Component, ...rest }) => {
   const { token } = useContext(AuthenticationContext);
@@ -30,7 +30,7 @@ export const PrototypeRouter = () => {
   return (
     <Switch>
       <Route path="/login" component={Login} />
-      <PrivateRoute exact path="/" component={TranslationPage} />
+      <PrivateRoute exact path="/" component={Main} />
     </Switch>
   );
 };

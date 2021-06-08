@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../module/authentication/providers/authentication";
 import { getMockData } from "./data-mocks";
 
@@ -32,7 +32,7 @@ export const useQuery = ({
     },
   };
 
-  const exec = async () => {
+  const exec = useCallback(async () => {
     setLoading(true);
     try {
       const response =
@@ -49,7 +49,7 @@ export const useQuery = ({
     } finally {
       setLoading(false);
     }
-  };
+  }, [url]);
 
   useEffect(() => {
     if (onLoad) {
