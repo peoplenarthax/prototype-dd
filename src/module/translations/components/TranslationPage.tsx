@@ -35,10 +35,7 @@ export const TranslationPage = () => {
   };
 
   const onSave = () => {
-    // console.log(translations);
     const { sheetId } = sheets.find(({ title }) => title === currentSheet);
-    console.log(Object.values(translations[currentLang]));
-    console.log(translations[currentLang]);
     const rowIndex = Object.keys(translations).findIndex(
       (key) => key === currentLang
     );
@@ -71,6 +68,7 @@ export const TranslationPage = () => {
 
     submitChanges(body);
   };
+  
   return (
     <>
       <Header onSave={onSave} />
