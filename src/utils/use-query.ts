@@ -32,24 +32,29 @@ export const useQuery = ({
     },
   };
 
-  const exec = useCallback(async () => {
-    setLoading(true);
-    try {
-      const response =
-        process.env.AUTHENTICATION_DISABLED === "true"
-          ? await getMockData(method, url)
-          : await axios[method](
-              url,
-              ...(method === HTTPMethod.GET ? [options] : [body, options])
-            );
+  const exec = useCallback(
+    async (bodyParams?: object) => {
+      setLoading(true);
+      try {
+        const response =
+          process.env.AUTHENTICATION_DISABLED === "true"
+            ? await getMockData(method, url)
+            : await axios[method](
+                url,
+                ...(method === HTTPMethod.GET
+                  ? [options]
+                  : [bodyParams ?? body, options])
+              );
 
-      setData(decorator ? decorator(response) : response);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
-  }, [url]);
+        setData(decorator ? decorator(response) : response);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [url]
+  );
 
   useEffect(() => {
     if (onLoad) {

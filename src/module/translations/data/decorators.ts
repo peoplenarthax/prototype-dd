@@ -1,7 +1,5 @@
 import { SheetsResponse, TranslationResponse } from "./translations";
 
-const transpose = (matrix) => matrix[0].map((_, c) => matrix.map((r) => r[c]));
-
 const toKeyValues = (matrix) => {
   const { key, ...translations } = matrix.reduce((acc, val) => {
     const [key, ...values] = val;
@@ -12,7 +10,6 @@ const toKeyValues = (matrix) => {
     };
   }, {});
 
-  console.log({ key, translations });
   const translationsWithKey = Object.keys(translations).reduce(
     (acc, val) => ({
       ...acc,
@@ -30,9 +27,42 @@ const toKeyValues = (matrix) => {
   return { key, ...translationsWithKey };
 };
 export const toTranslationObject = ({ data }: TranslationResponse) => {
-  return toKeyValues(transpose(data.values));
+  return toKeyValues(data.values);
 };
 
 export const toSheetList = ({ data }: SheetsResponse) => {
-  return data.sheets.map(({ properties }) => properties.title);
+  return data.sheets.map(({ properties }) => ({ title: properties.title, sheetId: properties.sheetId});
+};
+
+export const toBatchUpdateBody = () => {
+  return {
+    requests: [
+      {
+        updateCells = {
+          fields = "VALORRRR",
+          rows = [
+            {
+              values = [
+                {
+                  userEnteredValue = {
+                    stringValue = "MAAASSS VALOR",
+                  },
+                },
+                {
+                  userEnteredValue = {
+                    stringValue = "MENOS VALOR",
+                  },
+                },
+              ],
+            },
+          ],
+          start = {
+            columnIndex = 7,
+            rowIndex = 7,
+            sheetId = "garaje",
+          },
+        },
+      },
+    ],
+  };
 };

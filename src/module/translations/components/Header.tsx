@@ -2,7 +2,7 @@ import * as React from "react";
 import { ChangeEventHandler, useContext, useState } from "react";
 import { TranslationsContext } from "../providers/translations";
 
-export const Header = () => {
+export const Header = ({ onSave }) => {
   const {
     sheets,
     currentSheet,
@@ -21,6 +21,7 @@ export const Header = () => {
   const onLangSelected: ChangeEventHandler<HTMLSelectElement> = (evt) => {
     changeLang(evt.currentTarget.value);
   };
+
   return (
     <nav
       className="navbar is-align-items-center"
@@ -41,8 +42,8 @@ export const Header = () => {
           </option>
           {!loading &&
             sheets.map((sheet) => (
-              <option value={sheet} key={sheet}>
-                {sheet}
+              <option value={sheet.title} key={sheet.title}>
+                {sheet.title}
               </option>
             ))}
         </select>
@@ -55,14 +56,18 @@ export const Header = () => {
               Choose a template...
             </option>
             {!loading &&
-              languages.map((sheet) => (
-                <option value={sheet} key={sheet}>
-                  {sheet}
+              languages.map((language) => (
+                <option value={language} key={language}>
+                  {language}
                 </option>
               ))}
           </select>
         </div>
       )}
+
+      <button className="button is-success" onClick={onSave}>
+        Save translations ❤
+      </button>
     </nav>
   );
 };

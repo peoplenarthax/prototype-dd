@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChangeEventHandler, useContext } from "react";
+import { ChangeEventHandler, useContext, useEffect, useState } from "react";
 import { TranslationsContext } from "../providers/translations";
 import { DefaultTemplate } from "./templates/default";
 import { GarajeTemplate } from "./templates/garaje";
@@ -7,21 +7,19 @@ import { GarajeTemplate } from "./templates/garaje";
 const TemplateMap = {
   garaje: GarajeTemplate,
 };
-export const Template = () => {
-  const { currentSheet, sheetKeys, loading, currentLang } =
-    useContext(TranslationsContext);
+export const Template = ({ lang, sheet, translations, keys, onChange }) => {
+  const Component = TemplateMap[sheet] ?? DefaultTemplate;
 
-  const { key, ...translation } = sheetKeys ?? {};
-
-  const Component = TemplateMap[currentSheet] ?? DefaultTemplate;
+  const showTemplate = sheet && keys && lang;
 
   return (
     <section className="section">
-      {currentSheet && !loading && key && currentLang ? (
+      {showTemplate ? (
         <Component
-          key={currentLang}
-          keys={sheetKeys.key}
-          translations={translation[currentLang]}
+          key={lang}
+          keys={keys}
+          translations={translations}
+          onChange={onChange}
         />
       ) : (
         <h1> Loading Things</h1>

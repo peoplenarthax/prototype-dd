@@ -4,7 +4,7 @@ import { HTTPMethod, useQuery } from "../../../utils/use-query";
 import { toSheetList, toTranslationObject } from "../data/decorators";
 
 interface ITranslationsContext {
-  sheets: string[];
+  sheets: { title: string; sheetId: number }[];
   currentSheet: string;
   loadSheet: Function;
   sheetKeys: { [k: string]: string[] };
@@ -51,6 +51,11 @@ export const TranslationsProvider: React.FC = ({ children }) => {
     decorator: toTranslationObject,
   });
 
+  const { exec: submitChanges, loading: submitLoading } = useQuery({
+    method: HTTPMethod.POST,
+    url: `https://sheets.googleapis.com/v4/spreadsheets/1KyWk59HXtJnhTKclAird6q9c-vzqA4c6iJ8CcGCfgqo:batchUpdate`,
+  });
+
   useEffect(() => {
     querySheetValues();
   }, [currentSheet]);
@@ -74,6 +79,7 @@ export const TranslationsProvider: React.FC = ({ children }) => {
         changeLang: (lang: string) => {
           setCurrentLang(lang);
         },
+        submitChanges,
       }}
     >
       {children}

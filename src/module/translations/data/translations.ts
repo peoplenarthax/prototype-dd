@@ -9,8 +9,9 @@ export const TranslationsMock = () =>
   createBuilder<TranslationResponse>({
     data: {
       values: [
-        ["key", "es", "en"],
-        ["INTRO", "hola", "hello"],
+        ["key", "INTRO"],
+        ["es", "hola"],
+        ["en", "hello"],
       ],
     },
   });
